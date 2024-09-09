@@ -70,7 +70,7 @@ var taskIdCounter = 1;
 var isSchedulerPaused = false;
 
 var currentTask = null;
-var currentPriorityLevel = NormalPriority;
+var currentPriorityLevel = NormalPriority; // 3
 
 // This is set while performing work, to prevent re-entrancy.
 var isPerformingWork = false;

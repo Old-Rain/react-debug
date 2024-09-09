@@ -347,6 +347,8 @@ function ChildReconciler(shouldTrackSideEffects) {
     lastPlacedIndex: number,
     newIndex: number,
   ): number {
+    // 全新的 fiber 的 index 默认为0
+    // newIndex 是 jsx 数组元素的下标，代表在页面中的位置
     newFiber.index = newIndex;
     if (!shouldTrackSideEffects) {
       // Noop.
@@ -354,16 +356,41 @@ function ChildReconciler(shouldTrackSideEffects) {
     }
     const current = newFiber.alternate;
     if (current !== null) {
+      // current 不为 null 则表示复用
+      
+      // 到这里,已知
+      // newFiber 一定是本轮遍历中最靠后的
+      // oldIndex 表示 newFiber 对应的 oldFiber 也就是更新前在页面中的索引位置
+      // lastPlacedIndex 表示 newFiber 上个节点在更新后应该所处的索引位置
       const oldIndex = current.index;
       if (oldIndex < lastPlacedIndex) {
+        // 如果旧位置比上个节点的位置小
+        // 则需要移动当前节点的位置
+        // 打上【插入】标记，在 commit 阶段执行 appendChild
+        // 最后返回这个索引
+
+        // 所以什么情况会走到这里？
+        // 如果是 BC => ABC
+        // 看似是 oldB.index【0】 < newB.index【1】
+        // 但是在第一轮遍历中，A 与 B 比较，key 不同就直接跳出循环了
+        // todo 2024.08.26 03:53
+        
         // This is a move.
         newFiber.flags = Placement;
         return lastPlacedIndex;
       } else {
+        // 等于或大于
+        // 则返回旧的索引
+
         // This item can stay in place.
         return oldIndex;
       }
     } else {
+      // current 为 null
+      // 在这里表示因为 type 不同而新建
+      // 打上【插入】标记，在 commit 阶段执行 appendChild
+      // 最后返回这个索引
+      
       // This is an insertion.
       newFiber.flags = Placement;
       return lastPlacedIndex;
@@ -816,6 +843,9 @@ function ChildReconciler(shouldTrackSideEffects) {
       } else {
         nextOldFiber = oldFiber.sibling;
       }
+
+      // 对比 oldFiber 和 newChildren[newIdx]
+      // key 不同，返回值为 null
       const newFiber = updateSlot(
         returnFiber,
         oldFiber,
@@ -830,15 +860,23 @@ function ChildReconciler(shouldTrackSideEffects) {
         if (oldFiber === null) {
           oldFiber = nextOldFiber;
         }
-        break;
+        break; // key不同而不可复用，直接跳出循环
       }
       if (shouldTrackSideEffects) {
         if (oldFiber && newFiber.alternate === null) {
+          // newFiber.alternate 为 null，则表示 oldFiber 与 newChildren[newIdx] 的 type 不同
+          // 需要为 oldFiber 打上 Deletion 标记，在 commit 阶段将其删除
+          
           // We matched the slot, but we didn't reuse the existing fiber, so we
           // need to delete the existing child.
           deleteChild(returnFiber, oldFiber);
         }
       }
+
+      // 无论 newFiber 是复用的，还是因 type 不同而新创建的
+      // 都要为 newFiber 赋值 Placement 的 effectTag，表示在 commit 阶段需要被插入
+      // 并返回 newFiber 在页面中的索引位置,赋值到 lastPlacedIndex
+      // lastPlacedIndex 初始值为 0，在遍历到可复用的节点之前 placeChild 的返回值一直是 lastPlacedIndex 的初始值 0
       lastPlacedIndex = placeChild(newFiber, lastPlacedIndex, newIdx);
       if (previousNewFiber === null) {
         // TODO: Move out of the loop. This only happens for the first run.
@@ -885,6 +923,8 @@ function ChildReconciler(shouldTrackSideEffects) {
 
     // Keep scanning and use the map to restore deleted items as moves.
     for (; newIdx < newChildren.length; newIdx++) {
+      // 从 existingChildren 这个 map 中 get newChildren[newIdx].key
+      // 再执行 updateElement 返回复用或新建的 fiber
       const newFiber = updateFromMap(
         existingChildren,
         returnFiber,
@@ -895,6 +935,9 @@ function ChildReconciler(shouldTrackSideEffects) {
       if (newFiber !== null) {
         if (shouldTrackSideEffects) {
           if (newFiber.alternate !== null) {
+            // 如果 newFiber 可复用（type 相同）
+            // 则从 map 中移除 oldFiber，表示这个节点已经操作过了
+
             // The new fiber is a work in progress, but if there exists a
             // current, that means that we reused the fiber. We need to delete
             // it from the child list so that we don't add it to the deletion
@@ -915,6 +958,8 @@ function ChildReconciler(shouldTrackSideEffects) {
     }
 
     if (shouldTrackSideEffects) {
+      // map 中剩下的节点都是不能复用的，都需要标记 Deletion
+      
       // Any existing children that weren't consumed above were deleted. We need
       // to add them to the deletion list.
       existingChildren.forEach(child => deleteChild(returnFiber, child));

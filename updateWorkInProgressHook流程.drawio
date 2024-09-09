@@ -1,0 +1,58 @@
+<mxfile host="65bd71144e">
+    <diagram id="r6PJf74hEdj_v_8hwQzk" name="第 1 页">
+        <mxGraphModel dx="1239" dy="1152" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="renderWithHooks&lt;br&gt;&lt;br&gt;&lt;span style=&quot;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;currentlyRenderingFiber = workInProgress&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;workInProgress.memoizedState = null&lt;br&gt;&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;workInProgress.updateQueue = null" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;align=left;verticalAlign=top;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="160" width="360" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="currentlyRenderingFiber&lt;br&gt;(null)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry y="40" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="workInProgressHook&lt;br&gt;(null)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="40" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="currentHook&lt;br&gt;(null)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="40" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="endArrow=classic;html=1;fontSize=14;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="4">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="360" y="200" as="sourcePoint"/>
+                        <mxPoint x="600" y="300" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="9" value="renderWithHooks&lt;br&gt;&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;// ..." style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;align=left;verticalAlign=top;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="560" width="360" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="currentlyRenderingFiber&lt;br&gt;(workInProgress)" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry y="440" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="workInProgressHook&lt;br&gt;null" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="440" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="currentHook&lt;br&gt;null" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="440" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="shape=flexArrow;endArrow=classic;html=1;fontSize=14;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="280" y="340" as="sourcePoint"/>
+                        <mxPoint x="280" y="410" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="Component&lt;br&gt;&lt;br&gt;&lt;span style=&quot;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;useReducer1&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;useReducer2" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;align=left;verticalAlign=top;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="640" width="330" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="&lt;div&gt;updateWorkInProgressHook&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;let nextCurrentHook&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;if (currentHook === null) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; // 第一个hook判断成立&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; const current = currentlyRenderingFiber.alternate;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; if (current !== null) {&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;// update时，存在current&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; nextCurrentHook = current.memoizedState;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; } else {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; nextCurrentHook = null;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&amp;nbsp; } else {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; nextCurrentHook = currentHook.next;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;align=left;verticalAlign=top;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="560" width="560" height="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="" style="endArrow=classic;html=1;fontSize=14;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" target="17">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="260" y="690" as="sourcePoint"/>
+                        <mxPoint x="-30" y="590" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

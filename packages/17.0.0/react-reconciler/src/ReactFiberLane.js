@@ -609,6 +609,7 @@ export function includesSomeLane(a: Lanes | Lane, b: Lanes | Lane) {
   return (a & b) !== NoLanes;
 }
 
+// 判断 set 中 是否包含 subset
 export function isSubsetOfLanes(set: Lanes, subset: Lanes | Lane) {
   return (set & subset) === subset;
 }

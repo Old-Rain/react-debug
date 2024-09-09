@@ -1,0 +1,54 @@
+<mxfile host="65bd71144e">
+    <diagram id="dzdNqzZJpYT2-3P6Uz1u" name="第 1 页">
+        <mxGraphModel dx="1723" dy="1152" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="19" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="5" target="11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="否" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="5" target="13" edge="1">
+                    <mxGeometry x="-0.8421" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="100" y="240"/>
+                            <mxPoint x="100" y="720"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="5" value="上次更新时的fiber(current)&lt;br&gt;是否存在对应的dom" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="200" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="是" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="11" target="12" edge="1">
+                    <mxGeometry x="-0.6087" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="620" y="400"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="dom是否可复用" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="360" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="将上次更新的fiber&lt;br&gt;的副本(current.alternate)&lt;br&gt;作为本次新生成的fiber返回" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="680" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="创建一个新的fiber并返回" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="680" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="20" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="标记dom需要被删除" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="520" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="否" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="11" target="20" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="360" y="460" as="sourcePoint"/>
+                        <mxPoint x="360" y="540" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

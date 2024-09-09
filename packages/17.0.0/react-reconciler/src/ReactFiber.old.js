@@ -114,14 +114,14 @@ if (__DEV__) {
 let debugCounter = 1;
 
 function FiberNode(
-  tag: WorkTag,
-  pendingProps: mixed,
-  key: null | string,
-  mode: TypeOfMode,
+  tag: WorkTag, // HostRoot 3
+  pendingProps: mixed, // null
+  key: null | string, // null
+  mode: TypeOfMode, // 0
 ) {
   // Instance
-  this.tag = tag;
-  this.key = key;
+  this.tag = tag; // HostRoot 3
+  this.key = key; // null
   this.elementType = null;
   this.type = null;
   this.stateNode = null;
@@ -134,13 +134,13 @@ function FiberNode(
 
   this.ref = null;
 
-  this.pendingProps = pendingProps;
+  this.pendingProps = pendingProps; // null
   this.memoizedProps = null;
   this.updateQueue = null;
   this.memoizedState = null;
   this.dependencies = null;
 
-  this.mode = mode;
+  this.mode = mode; // 0
 
   // Effects
   this.flags = NoFlags;
@@ -208,10 +208,10 @@ function FiberNode(
 // 5) It should be easy to port this to a C struct and keep a C implementation
 //    compatible.
 const createFiber = function(
-  tag: WorkTag,
-  pendingProps: mixed,
-  key: null | string,
-  mode: TypeOfMode,
+  tag: WorkTag, // HostRoot 3
+  pendingProps: mixed, // null
+  key: null | string, // null
+  mode: TypeOfMode, // Legacy 0   Concurrent 7
 ): Fiber {
   // $FlowFixMe: the shapes are exact here but Flow doesn't like constructors
   return new FiberNode(tag, pendingProps, key, mode);
@@ -431,7 +431,7 @@ export function resetWorkInProgress(workInProgress: Fiber, renderLanes: Lanes) {
 export function createHostRootFiber(tag: RootTag): Fiber {
   let mode;
   if (tag === ConcurrentRoot) {
-    mode = ConcurrentMode | BlockingMode | StrictMode;
+    mode = ConcurrentMode | BlockingMode | StrictMode; // 7
   } else if (tag === BlockingRoot) {
     mode = BlockingMode | StrictMode;
   } else {

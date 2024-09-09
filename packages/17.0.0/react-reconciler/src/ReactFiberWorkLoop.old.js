@@ -2131,6 +2131,7 @@ function commitRootImpl(root, renderPriorityLevel) {
     }
   }
 
+  // enableSchedulerTracing通过环境变量赋值为true才会用到这个变量
   const rootDidHavePassiveEffects = rootDoesHavePassiveEffects;
 
   if (rootDoesHavePassiveEffects) {
@@ -2258,6 +2259,7 @@ function commitBeforeMutationEffects() {
   while (nextEffect !== null) {
     const current = nextEffect.alternate;
 
+    // 与dom focus和blur相关的操作
     if (!shouldFireAfterActiveInstanceBlur && focusedInstanceHandle !== null) {
       if ((nextEffect.flags & Deletion) !== NoFlags) {
         if (doesFiberContain(nextEffect, focusedInstanceHandle)) {
@@ -2310,10 +2312,12 @@ function commitMutationEffects(
 
     const flags = nextEffect.flags;
 
+    // 是否包含重置文本节点
     if (flags & ContentReset) {
       commitResetTextContent(nextEffect);
     }
 
+    // 是否有ref更新
     if (flags & Ref) {
       const current = nextEffect.alternate;
       if (current !== null) {
@@ -2340,7 +2344,7 @@ function commitMutationEffects(
         // inserted, before any life-cycles like componentDidMount gets called.
         // TODO: findDOMNode doesn't rely on this any more but isMounted does
         // and isMounted is deprecated anyway so we should be able to kill this.
-        nextEffect.flags &= ~Placement;
+        nextEffect.flags &= ~Placement; // 清理操作 如 0b110 & ~0b100 = 0b010 去掉了0b100
         break;
       }
       case PlacementAndUpdate: {
@@ -2435,6 +2439,7 @@ function commitLayoutEffects(root: FiberRoot, committedLanes: Lanes) {
 export function flushPassiveEffects(): boolean {
   // Returns whether passive effects were flushed.
   if (pendingPassiveEffectsRenderPriority !== NoSchedulerPriority) {
+    // 优先级相关
     const priorityLevel =
       pendingPassiveEffectsRenderPriority > NormalSchedulerPriority
         ? NormalSchedulerPriority
@@ -2475,6 +2480,8 @@ export function enqueuePendingPassiveHookEffectMount(
   effect: HookEffect,
 ): void {
   pendingPassiveHookEffectsMount.push(effect, fiber);
+
+  // 在 before mutation 时已经被设为 true
   if (!rootDoesHavePassiveEffects) {
     rootDoesHavePassiveEffects = true;
     scheduleCallback(NormalSchedulerPriority, () => {
@@ -2496,6 +2503,8 @@ export function enqueuePendingPassiveHookEffectUnmount(
       alternate.flags |= PassiveUnmountPendingDev;
     }
   }
+
+  // 在 before mutation 时已经被设为 true
   if (!rootDoesHavePassiveEffects) {
     rootDoesHavePassiveEffects = true;
     scheduleCallback(NormalSchedulerPriority, () => {

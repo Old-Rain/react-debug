@@ -242,6 +242,11 @@ export function reconcileChildren(
     // won't update its child set by applying minimal side-effects. Instead,
     // we will add them all to the child before it gets rendered. That means
     // we can optimize this reconciliation pass by not tracking side-effects.
+
+    // 如果这是一个尚未渲染的新组件，我们
+    // 不会通过应用最小的副作用来更新其子集。相反，
+    // 在渲染之前，我们会将它们全部添加到子对象中。这意味着
+    // 我们可以通过不跟踪副作用来优化这种协调过程。
     workInProgress.child = mountChildFibers(
       workInProgress,
       null,
@@ -255,6 +260,13 @@ export function reconcileChildren(
 
     // If we had any progressed work already, that is invalid at this point so
     // let's throw it out.
+
+    // 如果当前孩子与正在进行的工作相同，则意味着
+    // 我们还没有开始对这些孩子进行任何研究。因此，我们使用
+    // 克隆算法创建所有当前子项的副本。
+
+    // 如果我们已经有任何进展的工作，那么在这一点上是无效的，所以
+    // 我们把它扔掉吧。
     workInProgress.child = reconcileChildFibers(
       workInProgress,
       current.child,

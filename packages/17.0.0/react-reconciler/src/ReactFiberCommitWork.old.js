@@ -595,9 +595,7 @@ function commitLifeCycles(
 
       // TODO: I think this is now always non-null by the time it reaches the
       // commit phase. Consider removing the type check.
-      const updateQueue: UpdateQueue<
-        *,
-      > | null = (finishedWork.updateQueue: any);
+      const updateQueue: UpdateQueue<*> | null = (finishedWork.updateQueue: any);
       if (updateQueue !== null) {
         if (__DEV__) {
           if (
@@ -636,9 +634,7 @@ function commitLifeCycles(
     case HostRoot: {
       // TODO: I think this is now always non-null by the time it reaches the
       // commit phase. Consider removing the type check.
-      const updateQueue: UpdateQueue<
-        *,
-      > | null = (finishedWork.updateQueue: any);
+      const updateQueue: UpdateQueue<*> | null = (finishedWork.updateQueue: any);
       if (updateQueue !== null) {
         let instance = null;
         if (finishedWork.child !== null) {
@@ -1105,7 +1101,7 @@ function getHostSibling(fiber: Fiber): ?Instance {
   // search past them. This leads to exponential search for the next sibling.
   // TODO: Find a more efficient way to do this.
   let node: Fiber = fiber;
-  siblings: while (true) {
+  siblings: while (true) { // 这层while可以无视
     // If we didn't find anything, let's try the next sibling.
     while (node.sibling === null) {
       if (node.return === null || isHostParent(node.return)) {
@@ -1146,6 +1142,7 @@ function getHostSibling(fiber: Fiber): ?Instance {
 }
 
 function commitPlacement(finishedWork: Fiber): void {
+  // 不支持mutation则直接return 浏览器环境是支持的
   if (!supportsMutation) {
     return;
   }
@@ -1166,7 +1163,7 @@ function commitPlacement(finishedWork: Fiber): void {
       parent = parentStateNode.containerInfo;
       isContainer = true;
       break;
-    case HostPortal:
+    case HostPortal: // 通过React.createProtal创建的fiber节点
       parent = parentStateNode.containerInfo;
       isContainer = true;
       break;
@@ -1183,6 +1180,8 @@ function commitPlacement(finishedWork: Fiber): void {
           'in React. Please file an issue.',
       );
   }
+
+  // 重置文本节点并清除重置标记
   if (parentFiber.flags & ContentReset) {
     // Reset the text content of the parent before doing any insertions
     resetTextContent(parent);
@@ -1496,6 +1495,7 @@ function commitWork(current: Fiber | null, finishedWork: Fiber): void {
   }
 
   switch (finishedWork.tag) {
+    // 这些case都属于函数组件
     case FunctionComponent:
     case ForwardRef:
     case MemoComponent:

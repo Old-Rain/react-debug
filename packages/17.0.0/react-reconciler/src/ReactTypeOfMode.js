@@ -9,11 +9,11 @@
 
 export type TypeOfMode = number;
 
-export const NoMode = 0b00000;
-export const StrictMode = 0b00001;
+export const NoMode = 0b00000; // 没有模式 0
+export const StrictMode = 0b00001; // 严格模式 1
 // TODO: Remove BlockingMode and ConcurrentMode by reading from the root
 // tag instead
-export const BlockingMode = 0b00010;
-export const ConcurrentMode = 0b00100;
+export const BlockingMode = 0b00010; // Blocking模式 2
+export const ConcurrentMode = 0b00100; // Concurrent模式 4
 export const ProfileMode = 0b01000;
 export const DebugTracingMode = 0b10000;

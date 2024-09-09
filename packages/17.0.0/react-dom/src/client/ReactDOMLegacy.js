@@ -111,8 +111,8 @@ function shouldHydrateDueToLegacyHeuristic(container) {
 }
 
 function legacyCreateRootFromDOMContainer(
-  container: Container,
-  forceHydrate: boolean,
+  container: Container, // div#root
+  forceHydrate: boolean, // false
 ): RootType {
   const shouldHydrate =
     forceHydrate || shouldHydrateDueToLegacyHeuristic(container);
@@ -150,8 +150,8 @@ function legacyCreateRootFromDOMContainer(
   }
 
   return createLegacyRoot(
-    container,
-    shouldHydrate
+    container, // div#root
+    shouldHydrate // false
       ? {
           hydrate: true,
         }
@@ -173,11 +173,11 @@ function warnOnInvalidCallback(callback: mixed, callerName: string): void {
 }
 
 function legacyRenderSubtreeIntoContainer(
-  parentComponent: ?React$Component<any, any>,
-  children: ReactNodeList,
-  container: Container,
-  forceHydrate: boolean,
-  callback: ?Function,
+  parentComponent: ?React$Component<any, any>, // null
+  children: ReactNodeList, // <APP />
+  container: Container, // div#root
+  forceHydrate: boolean, // false
+  callback: ?Function, // undefined
 ) {
   if (__DEV__) {
     topLevelUpdateWarnings(container);
@@ -189,14 +189,19 @@ function legacyRenderSubtreeIntoContainer(
   let root: RootType = (container._reactRootContainer: any);
   let fiberRoot;
   if (!root) {
+    // 应用初始化的时候 root 肯定是不存在的
+    
+    // 创建 fiberRoot 和 rootFiber
     // Initial mount
     root = container._reactRootContainer = legacyCreateRootFromDOMContainer(
-      container,
-      forceHydrate,
+      container, // div#root
+      forceHydrate, // false
     );
     fiberRoot = root._internalRoot;
     if (typeof callback === 'function') {
       const originalCallback = callback;
+
+      // 将 render 第三个参数回调的 this 指向根组件实例，再传给下面的 updateContainer
       callback = function() {
         const instance = getPublicRootInstance(fiberRoot);
         originalCallback.call(instance);
@@ -204,6 +209,8 @@ function legacyRenderSubtreeIntoContainer(
     }
     // Initial mount should not be batched.
     unbatchedUpdates(() => {
+      // 创建 update 对象，执行调度，进入 render 阶段
+      //            // <APP />  fiberRoot   null            undefined
       updateContainer(children, fiberRoot, parentComponent, callback);
     });
   } else {
@@ -285,9 +292,9 @@ export function hydrate(
 }
 
 export function render(
-  element: React$Element<any>,
-  container: Container,
-  callback: ?Function,
+  element: React$Element<any>, // <APP />
+  container: Container, // div#root
+  callback: ?Function, // undefined
 ) {
   invariant(
     isValidContainer(container),
@@ -307,10 +314,10 @@ export function render(
   }
   return legacyRenderSubtreeIntoContainer(
     null,
-    element,
-    container,
+    element, // <APP />
+    container, // div#root
     false,
-    callback,
+    callback, // undefined
   );
 }
 

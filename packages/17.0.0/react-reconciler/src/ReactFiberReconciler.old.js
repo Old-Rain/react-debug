@@ -239,19 +239,19 @@ function findHostInstanceWithWarning(
 }
 
 export function createContainer(
-  containerInfo: Container,
-  tag: RootTag,
-  hydrate: boolean,
-  hydrationCallbacks: null | SuspenseHydrationCallbacks,
-): OpaqueRoot {
+  containerInfo: Container, // div#root
+  tag: RootTag, // LegacyRoot 0  ConcurrentRoot 2
+  hydrate: boolean, // false
+  hydrationCallbacks: null | SuspenseHydrationCallbacks, // null
+): OpaqueRoot {       //   div#root      2    false     null
   return createFiberRoot(containerInfo, tag, hydrate, hydrationCallbacks);
 }
 
 export function updateContainer(
-  element: ReactNodeList,
-  container: OpaqueRoot,
-  parentComponent: ?React$Component<any, any>,
-  callback: ?Function,
+  element: ReactNodeList, // <APP />
+  container: OpaqueRoot, // fiberRoot
+  parentComponent: ?React$Component<any, any>, // null
+  callback: ?Function, // undefined
 ): Lane {
   if (__DEV__) {
     onScheduleRoot(container, element);
@@ -265,7 +265,7 @@ export function updateContainer(
       warnIfNotScopedWithMatchingAct(current);
     }
   }
-  const lane = requestUpdateLane(current);
+  const lane = requestUpdateLane(current); // 获取 lane，调度时使用
 
   if (enableSchedulingProfiler) {
     markRenderScheduled(lane);
@@ -295,10 +295,11 @@ export function updateContainer(
     }
   }
 
-  const update = createUpdate(eventTime, lane);
+  // 创建一个 update 对象
+  const update = createUpdate(eventTime, lane); // 上一篇详细记录过
   // Caution: React DevTools currently depends on this property
   // being called "element".
-  update.payload = {element};
+  update.payload = {element}; // 将 <APP /> jsx 放到 update 的 payload
 
   callback = callback === undefined ? null : callback;
   if (callback !== null) {
@@ -311,11 +312,11 @@ export function updateContainer(
         );
       }
     }
-    update.callback = callback;
+    update.callback = callback; // render 传入的第三个参数回调，放到 update 的 callback
   }
 
-  enqueueUpdate(current, update);
-  scheduleUpdateOnFiber(current, lane, eventTime);
+  enqueueUpdate(current, update); // 将 update 添加到 fiberRoot 的 updateQueue.shared.pending
+  scheduleUpdateOnFiber(current, lane, eventTime); // 调度 update
 
   return lane;
 }

@@ -160,21 +160,24 @@ if (supportsMutation) {
     needsVisibilityToggle: boolean,
     isHidden: boolean,
   ) {
-    // We only have the top Fiber that was created but we need recurse down its
-    // children to find all the terminal nodes.
     let node = workInProgress.child;
     while (node !== null) {
       if (node.tag === HostComponent || node.tag === HostText) {
+        // 真实dom或文本
+
         appendInitialChild(parent, node.stateNode);
-      } else if (enableFundamentalAPI && node.tag === FundamentalComponent) {
+      } else if (enableFundamentalAPI/* false */ && node.tag === FundamentalComponent) {
+        // 实验特性
+        
         appendInitialChild(parent, node.stateNode.instance);
       } else if (node.tag === HostPortal) {
-        // If we have a portal child, then we don't want to traverse
-        // down its children. Instead, we'll get insertions from each child in
-        // the portal directly.
+        // protal 插入传入的dom，所以不会添加到父级fiber的dom
+
       } else if (node.child !== null) {
+        // 这里应该是组件套组件的情况
+        
         node.child.return = node;
-        node = node.child;
+        node = node.child; // 一直找到有真实dom的fiber节点
         continue;
       }
       if (node === workInProgress) {
@@ -186,6 +189,8 @@ if (supportsMutation) {
         }
         node = node.return;
       }
+
+      // 在beginWork中处理子元素为数组的情况时，创建子fiber的时候就已经处理过了，这里应该是保险起见
       node.sibling.return = node.return;
       node = node.sibling;
     }

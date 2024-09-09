@@ -235,6 +235,8 @@ function PropertyInfoRecord(
 // name warnings.
 const properties = {};
 
+// window.__properties__ = properties // 添加到window上方便观察
+
 // These props are reserved by React. They shouldn't be written to the DOM.
 const reservedProps = [
   'children',

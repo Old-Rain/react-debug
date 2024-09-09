@@ -60,21 +60,22 @@ import {
 } from 'react-reconciler/src/ReactRootTags';
 
 function ReactDOMRoot(container: Container, options: void | RootOptions) {
+  //                              //  div#root      2          undefined
   this._internalRoot = createRootImpl(container, ConcurrentRoot, options);
 }
 
 function ReactDOMBlockingRoot(
-  container: Container,
-  tag: RootTag,
+  container: Container, // div#root
+  tag: RootTag, // LegacyRoot 0
   options: void | RootOptions,
-) {
+) {                                 // div#root   0   undefined
   this._internalRoot = createRootImpl(container, tag, options);
 }
 
 ReactDOMRoot.prototype.render = ReactDOMBlockingRoot.prototype.render = function(
-  children: ReactNodeList,
+  children: ReactNodeList, // <APP />
 ): void {
-  const root = this._internalRoot;
+  const root = this._internalRoot; // fiberRoot
   if (__DEV__) {
     if (typeof arguments[1] === 'function') {
       console.error(
@@ -98,6 +99,7 @@ ReactDOMRoot.prototype.render = ReactDOMBlockingRoot.prototype.render = function
       }
     }
   }
+  //          //  <APP />  fiberRoot
   updateContainer(children, root, null, null);
 };
 
@@ -118,9 +120,9 @@ ReactDOMRoot.prototype.unmount = ReactDOMBlockingRoot.prototype.unmount = functi
 };
 
 function createRootImpl(
-  container: Container,
-  tag: RootTag,
-  options: void | RootOptions,
+  container: Container, // div#root
+  tag: RootTag, // LegacyRoot 0  ConcurrentRoot 2
+  options: void | RootOptions, // undefined
 ) {
   // Tag is either LegacyRoot or Concurrent Root
   const hydrate = options != null && options.hydrate === true;
@@ -131,10 +133,13 @@ function createRootImpl(
       options.hydrationOptions != null &&
       options.hydrationOptions.mutableSources) ||
     null;
+
+  // 创建 fiberRoot            div#root   0或2   false    null
   const root = createContainer(container, tag, hydrate, hydrationCallbacks);
-  markContainerAsRoot(root.current, container);
+  markContainerAsRoot(root.current, container); // 将 rootFiber 挂到 div#root DOM 上
   const containerNodeType = container.nodeType;
 
+  // 挂载事件相关
   if (enableEagerRootListeners) {
     const rootContainerElement =
       container.nodeType === COMMENT_NODE ? container.parentNode : container;
@@ -158,6 +163,7 @@ function createRootImpl(
     }
   }
 
+  // 非 SSR 就是 null 了
   if (mutableSources) {
     for (let i = 0; i < mutableSources.length; i++) {
       const mutableSource = mutableSources[i];
@@ -193,9 +199,9 @@ export function createBlockingRoot(
 }
 
 export function createLegacyRoot(
-  container: Container,
-  options?: RootOptions,
-): RootType {
+  container: Container, // div#root
+  options?: RootOptions, // undefined
+): RootType {                   // div#root      0       undefined
   return new ReactDOMBlockingRoot(container, LegacyRoot, options);
 }
 

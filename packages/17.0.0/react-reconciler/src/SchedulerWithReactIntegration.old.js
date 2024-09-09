@@ -92,16 +92,16 @@ export const now =
 
 export function getCurrentPriorityLevel(): ReactPriorityLevel {
   switch (Scheduler_getCurrentPriorityLevel()) {
-    case Scheduler_ImmediatePriority:
-      return ImmediatePriority;
-    case Scheduler_UserBlockingPriority:
-      return UserBlockingPriority;
-    case Scheduler_NormalPriority:
-      return NormalPriority;
-    case Scheduler_LowPriority:
-      return LowPriority;
-    case Scheduler_IdlePriority:
-      return IdlePriority;
+    case Scheduler_ImmediatePriority: // 1
+      return ImmediatePriority; // 99
+    case Scheduler_UserBlockingPriority: // 2
+      return UserBlockingPriority; // 98
+    case Scheduler_NormalPriority: // 3
+      return NormalPriority; // 97
+    case Scheduler_LowPriority: // 4
+      return LowPriority; // 96
+    case Scheduler_IdlePriority: // 5
+      return IdlePriority; // 95
     default:
       invariant(false, 'Unknown priority level.');
   }
@@ -109,16 +109,16 @@ export function getCurrentPriorityLevel(): ReactPriorityLevel {
 
 function reactPriorityToSchedulerPriority(reactPriorityLevel) {
   switch (reactPriorityLevel) {
-    case ImmediatePriority:
-      return Scheduler_ImmediatePriority;
-    case UserBlockingPriority:
-      return Scheduler_UserBlockingPriority;
-    case NormalPriority:
-      return Scheduler_NormalPriority;
-    case LowPriority:
-      return Scheduler_LowPriority;
-    case IdlePriority:
-      return Scheduler_IdlePriority;
+    case ImmediatePriority: // 99
+      return Scheduler_ImmediatePriority; // 1
+    case UserBlockingPriority: // 98
+      return Scheduler_UserBlockingPriority; // 2
+    case NormalPriority: // 3
+      return Scheduler_NormalPriority; // 97
+    case LowPriority: // 4
+      return Scheduler_LowPriority; // 96
+    case IdlePriority: // 5
+      return Scheduler_IdlePriority; // 95
     default:
       invariant(false, 'Unknown priority level.');
   }
