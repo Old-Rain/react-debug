@@ -15,13 +15,17 @@ const APP4 = () => {
   }
 
   useEffect(() => {
+    console.log('====首屏完成====');
+
     // 首屏渲染完成的 1000 毫秒后设置 count 为 1，优先级为 NormalPriority
     setTimeout(() => {
+      console.log('第 1 个 setCount', performance.now());
       setCount(1)
     }, 1000)
 
     // 再过 40 毫秒触发用户事件，优先级为 UserBlockingPriority
     setTimeout(() => {
+      console.log('第 2 个 setCount', performance.now());
       buttonR.current.click()
     }, 1040)
   }, [])
@@ -35,12 +39,6 @@ const APP4 = () => {
       {/* 页面上渲染 50000 个 span，span 中显示 count */}
       <div>
         {Array.from(new Array(50000)).map((item, index) => {
-          if (!index) {
-            // 打印到控制台便于观察
-            console.log(Math.round(performance.now()))
-            console.log(count)
-          }
-
           return <span key={index}>{count}</span>
         })}
       </div>
@@ -48,5 +46,5 @@ const APP4 = () => {
   )
 }
 
-ReactDOM.render(<APP4 />, document.getElementById('root'))
-// ReactDOM.createRoot(document.getElementById('root')).render(<APP4 />)
+// ReactDOM.render(<APP4 />, document.getElementById('root'))
+ReactDOM.createRoot(document.getElementById('root')).render(<APP4 />)

@@ -56,4 +56,5 @@ class Item2 extends React.Component {
 
 function clickHe() {}
 
-ReactDOM.render(<APP />, document.getElementById('root'))
+// ReactDOM.render(<APP />, document.getElementById('root'))
+ReactDOM.createRoot(document.getElementById('root')).render(<APP />)

@@ -1,0 +1,360 @@
+<mxfile host="65bd71144e">
+    <diagram id="5HMnFFj7Zcu4oEFsHhuM" name="第 1 页">
+        <mxGraphModel dx="9047" dy="6416" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="112" value="" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fontColor=#FFFFFF;fillColor=#999999;fillStyle=solid;gradientColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="-1040" y="-40" width="2480" height="3080" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="" style="edgeStyle=none;rounded=0;html=1;labelBackgroundColor=none;fontSize=14;" parent="1" source="7" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="unstable_scheduleCallback&lt;br&gt;&amp;nbsp;注册调度&lt;br&gt;新建一个任务&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;newTask={&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; startTime: currentTime + delay,&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; expirationTime: startTime + timeout,&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; sortIndex: -1&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;}&lt;/span&gt;&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="80" width="280" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="是" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="8" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="否" style="edgeStyle=none;html=1;fontSize=14;" parent="1" source="8" target="16" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="开始时间是否大于当前时间" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="260" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="10" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="&lt;div&gt;使用【开始时间】作为排序编号&lt;/div&gt;&lt;div&gt;并将任务放入 timerQueue&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;newTask.sortIndex = startTime;&amp;nbsp;&lt;/div&gt;&lt;div&gt;push(timerQueue, newTask);&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="240" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="12" target="14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="taskQueue 中没有任务&lt;br&gt;且 newTask 处在 timerQueue 堆顶" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="400" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;定时器到期，执行&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;handleTimeout&lt;/span&gt;" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;labelBackgroundColor=none;" parent="1" source="14" target="23" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="请求延迟调度&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;requestHostTimeout(&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; handleTimeout,&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; startTime - currentTime&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;)&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="560" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="16" target="18" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="&lt;div&gt;&lt;div&gt;使用【过期时间】作为排序编号&lt;/div&gt;&lt;div&gt;并将任务放入 taskQueue&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;newTask.sortIndex = expirationTime&lt;/div&gt;&lt;div&gt;push(taskQueue, newTask)&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="240" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="18" target="21" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="&lt;div&gt;&lt;font color=&quot;#ff99cc&quot;&gt;isHostCallbackScheduled&lt;/font&gt; 处于为调度状态&lt;/div&gt;&lt;div&gt;且 &lt;font color=&quot;#006600&quot;&gt;isPerformingWork&lt;/font&gt; 也处于未工作状态&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="400" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="" style="edgeStyle=none;rounded=0;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#FF0000;" parent="1" source="21" target="42" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="请求立即调度&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;div&gt;isHostCallbackScheduled = true&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#004c99&quot;&gt;requestHostCallback&lt;/font&gt;(&lt;font color=&quot;#ff0000&quot;&gt;flushWork&lt;/font&gt;)&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="560" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="23" target="25" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="&lt;span style=&quot;text-align: left;&quot;&gt;handleTimeout&lt;br&gt;&lt;/span&gt;&lt;br&gt;&lt;div&gt;将 timerQueue 中到期的任务添加至 taskQueue&lt;/div&gt;&lt;div&gt;advanceTimers(currentTime)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="720" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="是" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="25" target="27" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="&lt;div&gt;&lt;font color=&quot;#ff99cc&quot;&gt;isHostCallbackScheduled&lt;/font&gt; 处于为调度状态&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="840" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="27" target="29" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="定时器到期，执行&lt;span style=&quot;text-align: left;&quot;&gt;handleTimeout&lt;br&gt;&lt;/span&gt;&lt;br&gt;&lt;div&gt;将 timerQueue 中到期的任务添加至 taskQueue&lt;/div&gt;&lt;div&gt;advanceTimers(currentTime)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="960" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="是&lt;br&gt;&lt;span style=&quot;&quot;&gt;请求立即调度&lt;/span&gt;" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;labelBackgroundColor=none;" parent="1" source="29" target="21" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="220" y="1140"/>
+                            <mxPoint x="220" y="620"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="33" value="否" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" parent="1" source="29" target="32" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="&lt;div&gt;taskQueue 堆顶是否有任务&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="1120" width="280" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="是&lt;br&gt;请求延迟调度&lt;br&gt;定时器的过期时长为&lt;br&gt;timerQueue 堆顶任务的开始时间 - 当前时间" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;labelBackgroundColor=none;" parent="1" source="32" target="14" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-400" y="1220"/>
+                            <mxPoint x="-400" y="620"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="32" value="&lt;div&gt;timerQueue 堆顶是否有任务&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-280" y="1200" width="280" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="unstable_scheduleCallback最终走向就是调用&lt;span style=&quot;text-align: left;&quot;&gt;requestHostCallback(flushWork)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;fontColor=#FF0000;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="400" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" style="edgeStyle=none;rounded=0;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FF0000;" parent="1" source="42" target="44" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="&lt;span style=&quot;background-color: initial;&quot;&gt;requestHostCallback(callback)&lt;br&gt;&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;&quot;&gt;先将 flushWork 保存到 &lt;font color=&quot;#ff00ff&quot;&gt;scheduledHostCallback&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="560" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="是&lt;br&gt;&lt;span style=&quot;color: rgb(240, 240, 240);&quot;&gt;改变其状态为 true&lt;/span&gt;" style="edgeStyle=none;rounded=0;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="44" target="46" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="&lt;font color=&quot;#33ffff&quot;&gt;isMessageLoopRunning&lt;/font&gt;&lt;br&gt;处于未运行状态" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="720" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="&lt;span style=&quot;color: rgb(240, 240, 240); font-family: Helvetica; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;&amp;nbsp;performWorkUntilDeadline&lt;/span&gt;" style="edgeStyle=none;rounded=0;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#FF0000;" parent="1" source="46" target="50" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;port2 派发 message，触发 port1 的 message 事件&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;等浏览器空闲后&lt;/span&gt;&lt;/div&gt;&lt;div&gt;从而&lt;font color=&quot;#ff0000&quot;&gt;异步&lt;/font&gt;执行 performWorkUntilDeadline&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="840" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="否" style="edgeStyle=none;rounded=0;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="50" target="54" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1160" y="1040" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="56" value="是" style="edgeStyle=none;rounded=0;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="50" target="55" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="&lt;font color=&quot;#ff00ff&quot;&gt;scheduledHostCallback&lt;/font&gt;&lt;br&gt;是否有值&lt;br&gt;由&amp;nbsp;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#004c99&quot;&gt;requestHostCallback&lt;/font&gt; 进入此环节肯定有值&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="1000" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="&lt;span style=&quot;color: rgb(51, 255, 255);&quot;&gt;isMessageLoopRunning = false&lt;/span&gt;&lt;br&gt;&lt;br&gt;MessageLoop运行结束" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="1160" y="1000" width="240" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="" style="edgeStyle=none;rounded=0;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="55" target="57" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="&lt;div&gt;const currentTime = getCurrentTime() // 获取当前时间&lt;/div&gt;&lt;div&gt;deadline = currentTime + yieldInterval // 修改过期时间，意味5毫秒后打断一次&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;// 执行 &lt;font color=&quot;#00ff00&quot;&gt;flushWork&lt;/font&gt;&lt;/div&gt;&lt;div&gt;// 传入 true 和 当前运行时间，并获取结果&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;const hasMoreWork = scheduledHostCallback(&lt;/div&gt;&lt;div&gt;&amp;nbsp; true,&lt;/div&gt;&lt;div&gt;&amp;nbsp; currentTime,&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="1120" width="360" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="是&lt;br&gt;表示5毫秒中没有处理完 taskQueue 中的所有任务&lt;br&gt;暂时打断，将主动权还给浏览器" style="edgeStyle=none;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="57" target="46" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="1400"/>
+                            <mxPoint x="560" y="900"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="61" value="否&lt;br&gt;表示 taskQueue 中的所有任务都已执行完成&lt;br&gt;&lt;span style=&quot;color: rgb(255, 0, 255);&quot;&gt;scheduledHostCallback = null&lt;/span&gt; 清理" style="edgeStyle=none;rounded=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="57" target="54" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1280" y="1400"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="57" value="&lt;span style=&quot;text-align: left;&quot;&gt;hasMoreWork&lt;br&gt;是否有未完成的工作&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="1360" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="&lt;font color=&quot;#ffffff&quot;&gt;核心就是执行&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;color: rgb(102, 178, 255); text-align: left;&quot;&gt;workLoop&lt;/span&gt;" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#006600;" parent="1" source="63" target="64" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;function&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 255, 0); text-align: left;&quot;&gt; flushWork&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;(&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;hasTimeRemaining, initialTime&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;)&lt;/font&gt;&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="1520" width="440" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" style="edgeStyle=none;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="64" target="67" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="1810"/>
+                            <mxPoint x="560" y="1540"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="64" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 重置 HostCallbackScheduled&lt;/font&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ff99cc&quot;&gt;isHostCallbackScheduled = false&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 将 PerformingWork 切换至工作状态&lt;/font&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#006600&quot;&gt;isPerformingWork = true&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 记录当前全局优先级&lt;/font&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ffffff&quot;&gt;const previousPriorityLevel = currentPriorityLevel&lt;/font&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;try {&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp; // workLoop 的结果，会在时间切片中作为是否结束的依据&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp; // hasTimeRemaining 固定位 true&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp; // initialTime 为时间切片中，port1 触发 message 执行 performWorkUntilDeadline 的时间&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp; &lt;/span&gt;&lt;font color=&quot;#990000&quot;&gt;return&lt;/font&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;&lt;font color=&quot;#66b2ff&quot;&gt;workLoop&lt;/font&gt;&lt;font color=&quot;#ffffff&quot;&gt;(hasTimeRemaining, initialTime)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;} finally {&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp; currentTask = null&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp; // workLoop 中可能会修改优先级&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp; currentPriorityLevel = previousPriorityLevel&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; isPerformingWork = false&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;}&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=left;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="1600" width="440" height="420" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="&lt;font color=&quot;#ffffff&quot;&gt;核心就是遍历 taskQueue，执行到期任务的回调&lt;/font&gt;&lt;span style=&quot;color: rgb(153, 153, 0); text-align: left;&quot;&gt;callback&lt;/span&gt;" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#006600;" parent="1" source="67" target="68" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="67" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;function &lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 178, 255); text-align: left;&quot;&gt;workLoop&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;(&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;hasTimeRemaining, initialTime&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;)&lt;/font&gt;&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1520" width="440" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="" style="edgeStyle=none;rounded=1;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#666666;" parent="1" source="68" target="69" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="&lt;div&gt;&lt;font&gt;let currentTime = initialTime&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 由于 requestHostCallback(flushWork) 可能是请求定时调度，而且本身就是异步执行&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 所以每次执行 workLoop，都需要检查一次 timerQueue 中的过期任务&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;advanceTimers(currentTime)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// currentTask 先取 taskQueue 堆顶&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 如果 currentTask.callback 的返回值仍是函数，那么会再赋值到 currentTask&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;currentTask = peek(taskQueue)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=left;verticalAlign=top;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1600" width="440" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="是" style="edgeStyle=none;rounded=1;html=1;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="69" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="260" y="1960" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="75" value="否&lt;br&gt;跳出循环&lt;br&gt;&lt;span style=&quot;text-align: left;&quot;&gt;currentTask 无值&lt;/span&gt;" style="edgeStyle=none;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="69" target="74" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-540" y="1880"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="69" value="&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;开启 while 循环&lt;br&gt;currentTask 是否有值&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;表示是否有要执行的任务&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1840" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="是&lt;br&gt;跳出循环&lt;br&gt;currentTask 有值" style="edgeStyle=none;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="73" target="74" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="520" y="2000" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="80" value="否" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="73" target="79" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;currentTask.expirationTime &amp;gt; currentTime &amp;amp;&amp;amp; shouldYieldToHost()&lt;br&gt;&lt;/font&gt;任务是否未过期，且循环执行已超过5毫秒&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1960" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="是" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="74" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-540" y="2080" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="104" value="否" style="edgeStyle=none;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="74" target="108" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-720" y="2000" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="74" value="&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;currentTask 是否有值&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="-680" y="1960" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="否" style="edgeStyle=none;rounded=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="79" target="83" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="440" y="2120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="85" value="是" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="79" target="84" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;currentTask.&lt;/font&gt;&lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt;&lt;font color=&quot;#ffffff&quot;&gt; 是否为 function&lt;/font&gt;&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;fontStyle=0" parent="1" vertex="1">
+                    <mxGeometry x="120" y="2080" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" style="edgeStyle=none;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="95" target="83" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="720" y="2680" as="sourcePoint"/>
+                        <Array as="points">
+                            <mxPoint x="-320" y="2920"/>
+                            <mxPoint x="-320" y="2120"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="83" value="&lt;div&gt;&lt;span style=&quot;color: rgb(102, 102, 102); background-color: initial;&quot;&gt;// 从 taskQueue 中删除该任务&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;pop(taskQueue)&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=middle;fontColor=#FFFFFF;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="-240" y="2080" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#999900;" parent="1" source="84" target="86" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="84" value="&lt;div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 清理 currentTask 上的回调&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentTask.&lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt; = null&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 当前任务的优先级覆盖至全局&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentPriorityLevel = currentTask.priorityLevel&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 是否已过期&lt;/font&gt;&lt;/div&gt;&lt;div&gt;const didUserCallbackTimeout = currentTask.expirationTime &amp;lt;= currentTime&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 执行 task 的回调&lt;/font&gt;&lt;/div&gt;&lt;div&gt;const continuationCallback = &lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt;(didUserCallbackTimeout)&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=left;verticalAlign=top;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2200" width="440" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="否" style="edgeStyle=none;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="86" target="88" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" value="是" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="86" target="90" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;continuationCallback&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;是否为 function&lt;/font&gt;&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=default;fontStyle=0" parent="1" vertex="1">
+                    <mxGeometry x="120" y="2480" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#666;" parent="1" source="88" target="92" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-100" y="2760"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="88" value="&lt;div&gt;&lt;span style=&quot;color: rgb(102, 102, 102); background-color: initial;&quot;&gt;// 从 taskQueue 中删除该任务&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;if (currentTask === peek(taskQueue)) {&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; pop(taskQueue);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=middle;fontColor=#FFFFFF;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="-240" y="2480" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="90" target="92" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 将新得到的回调挂到 currentTask 上&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentTask.&lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt; =&amp;nbsp;continuationCallback&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=left;verticalAlign=middle;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2600" width="440" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="92" target="95" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 每执行完一个任务，都要查询一下 timerQueue 中的过期任务&lt;/font&gt;&lt;/div&gt;&lt;div&gt;advanceTimers(currentTime)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=left;verticalAlign=middle;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2720" width="440" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 取 taskQueue 的堆顶，尝试下一轮循环&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentTask = peek(taskQueue)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(102, 102, 102);&quot;&gt;// continuationCallback 是 function 的情况下，没有删除堆顶，所以取到的还是这个任务&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(102, 102, 102);&quot;&gt;// taskQueue 如果有过 pop 操作，那么就会取到下一个距离过期时间最近的任务（有可能为空，表示到期任务都已执行完毕）&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=default;align=left;verticalAlign=middle;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2840" width="440" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="106" value="&lt;span style=&quot;color: rgb(102, 102, 102);&quot;&gt;// 作为&amp;nbsp;&lt;/span&gt;&lt;font style=&quot;&quot; color=&quot;#666666&quot;&gt;performWorkUntilDeadline 循环下一轮调度的依据&lt;/font&gt;&lt;br style=&quot;&quot;&gt;&lt;font style=&quot;&quot; color=&quot;#990000&quot;&gt;return&lt;/font&gt;&lt;span style=&quot;&quot;&gt;&amp;nbsp;true&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fontColor=#FFFFFF;fillColor=#18141D;align=center;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="-680" y="2080" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="&lt;span style=&quot;text-align: left; color: rgb(102, 102, 102);&quot;&gt;// 作为&amp;nbsp;&lt;/span&gt;&lt;font style=&quot;text-align: left;&quot; color=&quot;#666666&quot;&gt;performWorkUntilDeadline 中结束的依据&lt;/font&gt;&lt;br style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;text-align: left;&quot; color=&quot;#990000&quot;&gt;return&lt;/font&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&amp;nbsp;false&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fontColor=#FFFFFF;fillColor=#18141D;align=center;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="-1000" y="2080" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="110" value="&lt;span style=&quot;color: rgb(240, 240, 240);&quot;&gt;是&lt;/span&gt;&lt;br style=&quot;color: rgb(240, 240, 240);&quot;&gt;&lt;span style=&quot;color: rgb(240, 240, 240);&quot;&gt;请求延迟调度&lt;/span&gt;&lt;br style=&quot;color: rgb(240, 240, 240);&quot;&gt;&lt;span style=&quot;color: rgb(240, 240, 240);&quot;&gt;定时器的过期时长为&lt;/span&gt;&lt;br style=&quot;color: rgb(240, 240, 240);&quot;&gt;&lt;span style=&quot;color: rgb(240, 240, 240);&quot;&gt;timerQueue 堆顶任务的开始时间 - 当前时间&lt;/span&gt;" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="108" target="14" edge="1">
+                    <mxGeometry x="-0.8667" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-860" y="590"/>
+                        </Array>
+                        <mxPoint y="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="111" value="尝试请求定时调度后" style="edgeStyle=none;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontSize=14;fontColor=#FFFFFF;" parent="1" source="108" target="107" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;timerQueue 堆顶是否有任务&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="-1000" y="1960" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;function &lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 178, 255); text-align: left;&quot;&gt;workLoop&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;(&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;hasTimeRemaining, initialTime&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;)&lt;/font&gt;&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1520" width="440" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 重置 HostCallbackScheduled&lt;/font&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ff99cc&quot;&gt;isHostCallbackScheduled = false&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 将 PerformingWork 切换至工作状态&lt;/font&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#006600&quot;&gt;isPerformingWork = true&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 记录当前全局优先级&lt;/font&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ffffff&quot;&gt;const previousPriorityLevel = currentPriorityLevel&lt;/font&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ffffff&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;try {&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp; // workLoop 的结果，会在时间切片中作为是否结束的依据&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp; // hasTimeRemaining 固定位 true&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp; // initialTime 为时间切片中，port1 触发 message 执行 performWorkUntilDeadline 的时间&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp; &lt;/span&gt;&lt;font color=&quot;#990000&quot;&gt;return&lt;/font&gt;&lt;span style=&quot;color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;&lt;font color=&quot;#66b2ff&quot;&gt;workLoop&lt;/font&gt;&lt;font color=&quot;#ffffff&quot;&gt;(hasTimeRemaining, initialTime)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;} finally {&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp; currentTask = null&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font color=&quot;#666666&quot;&gt;// workLoop 中可能会修改优先级，所以先记录最后还原&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp; currentPriorityLevel = previousPriorityLevel&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; isPerformingWork = false&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(255, 255, 255);&quot;&gt;}&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=top;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="1600" width="440" height="420" as="geometry"/>
+                </mxCell>
+                <mxCell id="130" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;function&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 255, 0); text-align: left;&quot;&gt; flushWork&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;(&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;hasTimeRemaining, initialTime&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;)&lt;/font&gt;&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="1520" width="440" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="131" value="&lt;div&gt;&lt;font&gt;let currentTime = initialTime&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 由于 requestHostCallback(flushWork) 可能是请求定时调度，而且本身就是异步执行&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 所以每次执行 workLoop，都需要检查一次 timerQueue 中的过期任务&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;advanceTimers(currentTime)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// currentTask 先取 taskQueue 堆顶&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 如果 currentTask.callback 的返回值仍是函数，那么会再赋值到 currentTask&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;currentTask = peek(taskQueue)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=top;fontColor=#FFFFFF;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1600" width="440" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="132" value="&lt;span style=&quot;text-align: left;&quot;&gt;开启 while 循环&lt;br&gt;currentTask 是否有值&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;表示是否有要执行的任务&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fillStyle=solid;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1840" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="133" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font&gt;currentTask.expirationTime &amp;gt; currentTime &amp;amp;&amp;amp; shouldYieldToHost()&lt;br&gt;&lt;/font&gt;任务是否未过期，且循环执行已超过5毫秒&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fillStyle=solid;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1960" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="134" value="&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;currentTask.&lt;/font&gt;&lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt;&lt;font color=&quot;#ffffff&quot;&gt; 是否为 function&lt;/font&gt;&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fontStyle=0;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="2080" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="135" value="&lt;div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 清理 currentTask 上的回调&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentTask.&lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt; = null&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 当前任务的优先级覆盖至全局&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentPriorityLevel = currentTask.priorityLevel&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 是否已过期&lt;/font&gt;&lt;/div&gt;&lt;div&gt;const didUserCallbackTimeout = currentTask.expirationTime &amp;lt;= currentTime&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 执行 task 的回调&lt;/font&gt;&lt;/div&gt;&lt;div&gt;const continuationCallback = &lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt;(didUserCallbackTimeout)&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=top;fontColor=#FFFFFF;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2200" width="440" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="136" value="&lt;span style=&quot;color: rgb(255, 255, 255); text-align: left;&quot;&gt;continuationCallback&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;是否为 function&lt;/font&gt;&lt;br&gt;&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;rounded=0;glass=0;fontSize=14;fillColor=#18141D;fontStyle=0;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="2480" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="137" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 将新得到的回调挂到 currentTask 上&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentTask.&lt;font color=&quot;#999900&quot;&gt;callback&lt;/font&gt; =&amp;nbsp;continuationCallback&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=middle;fontColor=#FFFFFF;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2600" width="440" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="138" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 每执行完一个任务，都要查询一下 timerQueue 中的过期任务&lt;/font&gt;&lt;/div&gt;&lt;div&gt;advanceTimers(currentTime)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=middle;fontColor=#FFFFFF;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2720" width="440" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="139" value="&lt;div&gt;&lt;font color=&quot;#666666&quot;&gt;// 取 taskQueue 的堆顶，尝试下一轮循环&lt;/font&gt;&lt;/div&gt;&lt;div&gt;currentTask = peek(taskQueue)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(102, 102, 102);&quot;&gt;// continuationCallback 是 function 的情况下，没有删除堆顶，所以取到的还是这个任务&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(102, 102, 102);&quot;&gt;// taskQueue 如果有过 pop 操作，那么就会取到下一个距离过期时间最近的任务（有可能为空，表示到期任务都已执行完毕）&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;glass=0;fontSize=14;fillColor=#18141D;align=left;verticalAlign=middle;fontColor=#FFFFFF;fillStyle=solid;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="2840" width="440" height="160" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

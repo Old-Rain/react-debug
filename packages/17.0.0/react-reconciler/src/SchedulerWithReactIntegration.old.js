@@ -90,35 +90,47 @@ const initialTimeMs: number = Scheduler_now();
 export const now =
   initialTimeMs < 10000 ? Scheduler_now : () => Scheduler_now() - initialTimeMs;
 
+/** scheduler 优先级 转 react 优先级 */
 export function getCurrentPriorityLevel(): ReactPriorityLevel {
   switch (Scheduler_getCurrentPriorityLevel()) {
     case Scheduler_ImmediatePriority: // 1
       return ImmediatePriority; // 99
+
     case Scheduler_UserBlockingPriority: // 2
       return UserBlockingPriority; // 98
+
     case Scheduler_NormalPriority: // 3
       return NormalPriority; // 97
+
     case Scheduler_LowPriority: // 4
       return LowPriority; // 96
+
     case Scheduler_IdlePriority: // 5
       return IdlePriority; // 95
+
     default:
       invariant(false, 'Unknown priority level.');
   }
 }
 
+/** react 优先级 转 scheduler 优先级 */
 function reactPriorityToSchedulerPriority(reactPriorityLevel) {
   switch (reactPriorityLevel) {
     case ImmediatePriority: // 99
       return Scheduler_ImmediatePriority; // 1
+
     case UserBlockingPriority: // 98
       return Scheduler_UserBlockingPriority; // 2
-    case NormalPriority: // 3
-      return Scheduler_NormalPriority; // 97
-    case LowPriority: // 4
-      return Scheduler_LowPriority; // 96
-    case IdlePriority: // 5
-      return Scheduler_IdlePriority; // 95
+
+    case NormalPriority: // 97
+      return Scheduler_NormalPriority; // 3
+
+    case LowPriority: // 96
+      return Scheduler_LowPriority; // 4
+
+    case IdlePriority: // 95
+      return Scheduler_IdlePriority; // 5
+
     default:
       invariant(false, 'Unknown priority level.');
   }

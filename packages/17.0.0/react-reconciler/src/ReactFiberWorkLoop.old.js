@@ -393,6 +393,13 @@ export function getCurrentTime() {
 export function requestUpdateLane(fiber: Fiber): Lane {
   // Special cases
   const mode = fiber.mode;
+
+  // Legacy 模式下 mode 为 0，满足第一个判断
+  // 返回 SyncLane
+
+  // Concurrent 模式下 mode 为 7，不会进如第二个判断
+  // deferRenderPhaseUpdateToNextBatch 为 true，不会进入第三个判断
+  
   if ((mode & BlockingMode) === NoMode) {
     return (SyncLane: Lane);
   } else if ((mode & ConcurrentMode) === NoMode) {
@@ -430,10 +437,15 @@ export function requestUpdateLane(fiber: Fiber): Lane {
   // Our heuristic for that is whenever we enter a concurrent work loop.
   //
   // We'll do the same for `currentEventPendingLanes` below.
+
+  // currentEventWipLanes 表示工作中的 lanes，首屏时为 NoLanes
+  // 赋值为 workInProgressRootIncludedLanes，此时 workInProgressRootIncludedLanes 也是 NoLanes
   if (currentEventWipLanes === NoLanes) {
     currentEventWipLanes = workInProgressRootIncludedLanes;
   }
 
+  // ReactCurrentBatchConfig.transition 默认值为 0，即 NoTransition
+  // 只有在 useDeferredValue 相关的 api 中才会赋值
   const isTransition = requestCurrentTransition() !== NoTransition;
   if (isTransition) {
     if (currentEventPendingLanes !== NoLanes) {
@@ -447,6 +459,7 @@ export function requestUpdateLane(fiber: Fiber): Lane {
 
   // TODO: Remove this dependency on the Scheduler priority.
   // To do that, we're replacing it with an update lane priority.
+  // 获取 Scheduler 中的优先级，首屏时为 NormalPriority 优先级，得到 97
   const schedulerPriority = getCurrentPriorityLevel();
 
   // The old behavior was using the priority level of the Scheduler.
@@ -456,6 +469,7 @@ export function requestUpdateLane(fiber: Fiber): Lane {
   // then we'll get the priority of the current running Scheduler task,
   // which is probably not what we want.
   let lane;
+  // 是否用户事件触发，首屏肯定不是，进入 else 逻辑
   if (
     // TODO: Temporary. We're removing the concept of discrete updates.
     (executionContext & DiscreteEventContext) !== NoContext &&
@@ -463,10 +477,13 @@ export function requestUpdateLane(fiber: Fiber): Lane {
   ) {
     lane = findUpdateLane(InputDiscreteLanePriority, currentEventWipLanes);
   } else {
+    // Scheduler 优先级转 lane 优先级
+    // 首屏传入 97 得到 8，即 DefaultLanePriority 默认优先级
     const schedulerLanePriority = schedulerPriorityToLanePriority(
       schedulerPriority,
     );
 
+    // false
     if (decoupleUpdatePriorityFromScheduler) {
       // In the new strategy, we will track the current update lane priority
       // inside React and use that priority to select a lane for this update.
@@ -487,6 +504,8 @@ export function requestUpdateLane(fiber: Fiber): Lane {
       }
     }
 
+    // 根据 lane 的优先级和工作中的 lanes，获取一个 lane
+    // 首屏取到 512
     lane = findUpdateLane(schedulerLanePriority, currentEventWipLanes);
   }
 
@@ -523,6 +542,9 @@ export function scheduleUpdateOnFiber(
   checkForNestedUpdates();
   warnAboutRenderPhaseUpdatesInDEV(fiber);
 
+  // 向上找 fiberRoot 的同时，lane 也要向上冒泡合并到父级
+  // 那么 fiber 树中，触发更新节点的上层节点中，都会包含这个 lane
+  // 这样不用遍历子节点就能只道该子树所包含的所有lane
   const root = markUpdateLaneFromFiberToRoot(fiber, lane);
   if (root === null) {
     warnAboutUpdateOnUnmountedFiberInDEV(fiber);
@@ -530,8 +552,13 @@ export function scheduleUpdateOnFiber(
   }
 
   // Mark that the root has a pending update.
+  // 将 lane 与 root.pendingLanes 进行合并
+  // root.pendingLanes 即整棵 fiber 树中需要用到，但是还没有使用的 lanes
   markRootUpdated(root, lane, eventTime);
 
+  // 进入 render 阶段后
+  // workInProgressRoot 会在 prepareFreshStack 方法中赋值
+  // 也就是 render 阶段 root 触发更新才会出现这种情况
   if (root === workInProgressRoot) {
     // Received an update to a tree that's in the middle of rendering. Mark
     // that there was an interleaved update work on this root. Unless the
@@ -560,6 +587,8 @@ export function scheduleUpdateOnFiber(
 
   // TODO: requestUpdateLanePriority also reads the priority. Pass the
   // priority as an argument to that function and this one.
+
+  // 再次获取优先级，得到 97，即 NormalPriority
   const priorityLevel = getCurrentPriorityLevel();
 
   if (lane === SyncLane) {
@@ -591,6 +620,7 @@ export function scheduleUpdateOnFiber(
     }
   } else {
     // Schedule a discrete update but only if it's not Sync.
+    // 事件相关处理
     if (
       (executionContext & DiscreteEventContext) !== NoContext &&
       // Only updates at user-blocking priority or greater are considered
@@ -628,9 +658,14 @@ function markUpdateLaneFromFiberToRoot(
   lane: Lane,
 ): FiberRoot | null {
   // Update the source fiber's lanes
+
+  // 将传入的 lane 与已经使用的 lanes 合并
   sourceFiber.lanes = mergeLanes(sourceFiber.lanes, lane);
+
   let alternate = sourceFiber.alternate;
   if (alternate !== null) {
+    // 保证 workInProgress fiber 和 current fiber 的一致性
+    // 所以也需要合并
     alternate.lanes = mergeLanes(alternate.lanes, lane);
   }
   if (__DEV__) {
@@ -645,9 +680,13 @@ function markUpdateLaneFromFiberToRoot(
   let node = sourceFiber;
   let parent = sourceFiber.return;
   while (parent !== null) {
+    // childLanes 表示子树中所有用到的 lanes
+    // 这样合并完成后，随便找一个 fiber，无需遍历就可以只道该 fiber 的子树中用到了哪些 lanes
     parent.childLanes = mergeLanes(parent.childLanes, lane);
+
     alternate = parent.alternate;
     if (alternate !== null) {
+      // 保证 workInProgress fiber 和 current fiber 的一致性
       alternate.childLanes = mergeLanes(alternate.childLanes, lane);
     } else {
       if (__DEV__) {
@@ -656,9 +695,11 @@ function markUpdateLaneFromFiberToRoot(
         }
       }
     }
+
     node = parent;
     parent = parent.return;
   }
+
   if (node.tag === HostRoot) {
     const root: FiberRoot = node.stateNode;
     return root;
@@ -673,20 +714,40 @@ function markUpdateLaneFromFiberToRoot(
 // root has work on. This function is called on every update, and right before
 // exiting a task.
 function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
+  // 由最后 scheduleCallback() 得到的 task 对象
+  // 首次进到这里为 null
+  // 不为 null，说明已经存在被调度的任务了
   const existingCallbackNode = root.callbackNode;
 
   // Check if any lanes are being starved by other work. If so, mark them as
   // expired so we know to work on those next.
+
+  // 遍历 pendingLeans，没有过期时间的计算过期时间，过期的合并到 root.expiredLanes
   markStarvedLanesAsExpired(root, currentTime);
 
   // Determine the next lanes to work on, and their priority.
+  // 取本次更新优先级最高的 lanes
+  // 虽然首屏的优先级是 NormalPriority，但是 ensureRootIsScheduled 是一个反复调用的方法
+  // 因为会存在【高优先级任务】打断【低优先级任务】的情况
+  // 所以需要去优先级最高的 lane 进行更新
+  // workInProgressRoot 在进入 render 阶段后的 prepareFreshStack 方法中赋值
+  // 第二个参数即为 NoLanes 0
   const nextLanes = getNextLanes(
     root,
     root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes,
   );
+  
   // This returns the priority level computed during the `getNextLanes` call.
+  // getNextLanes 中可能会调整优先级
+  // 所以到这一步才获取优先级，首屏得到 DefaultLanePriority 8
   const newCallbackPriority = returnNextLanesPriority();
 
+  // 进行到这里，就是为了饥饿问题
+  // 如果低优先级的任务一直被高优先级的任务打断
+  // 那么随着时间的推移，这个低优先级的任务会过期
+  // 过期之后，将其转成同步的任务， 以此解决饥饿问题
+
+  // 没有需要更新的 lane 则重置相关属性
   if (nextLanes === NoLanes) {
     // Special case: There's nothing to work on.
     if (existingCallbackNode !== null) {
@@ -698,31 +759,42 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
   }
 
   // Check if there's an existing task. We may be able to reuse it.
+  // 已经存在被调度的任务
   if (existingCallbackNode !== null) {
     const existingCallbackPriority = root.callbackPriority;
     if (existingCallbackPriority === newCallbackPriority) {
+      // 如果已经调度的任务和本次更新的优先级相等则直接退出
       // The priority hasn't changed. We can reuse the existing task. Exit.
       return;
     }
     // The priority changed. Cancel the existing callback. We'll schedule a new
     // one below.
-    cancelCallback(existingCallbackNode);
+    // 优先级不同，则取消正在调度的任务，下面调度一个新的任务
+    cancelCallback(existingCallbackNode); // existingCallbackNode.callback = null
   }
 
   // Schedule a new callback.
   let newCallbackNode;
   if (newCallbackPriority === SyncLanePriority) {
+    // 同步优先级调度
+
     // Special case: Sync React callbacks are scheduled on a special
     // internal queue
     newCallbackNode = scheduleSyncCallback(
       performSyncWorkOnRoot.bind(null, root),
     );
   } else if (newCallbackPriority === SyncBatchedLanePriority) {
+    // 同步批量调度
+    
     newCallbackNode = scheduleCallback(
       ImmediateSchedulerPriority,
       performSyncWorkOnRoot.bind(null, root),
     );
   } else {
+    // 将 lane 优先级转换成 scheduler 的优先级
+    // 再以该优先级进行调度
+
+    // 首屏首次到这里，传入 DefaultLanePriority 8，得到 NormalSchedulerPriority 97
     const schedulerPriorityLevel = lanePriorityToSchedulerPriority(
       newCallbackPriority,
     );
@@ -732,8 +804,10 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
     );
   }
 
+  // 将本次调度的【优先级】和 task 保存到 root
   root.callbackPriority = newCallbackPriority;
   root.callbackNode = newCallbackNode;
+  // console.log('调度已安排');
 }
 
 // This is the entry point for every concurrent task, i.e. anything that
@@ -741,6 +815,7 @@ function ensureRootIsScheduled(root: FiberRoot, currentTime: number) {
 function performConcurrentWorkOnRoot(root) {
   // Since we know we're in a React event, we can clear the current
   // event time. The next update will compute a new event time.
+  // 进到该方法，先还原这几个全局变量
   currentEventTime = NoTimestamp;
   currentEventWipLanes = NoLanes;
   currentEventPendingLanes = NoLanes;
@@ -753,7 +828,7 @@ function performConcurrentWorkOnRoot(root) {
   // Flush any pending passive effects before deciding which lanes to work on,
   // in case they schedule additional work.
   const originalCallbackNode = root.callbackNode;
-  const didFlushPassiveEffects = flushPassiveEffects();
+  const didFlushPassiveEffects = flushPassiveEffects(); // 首屏没有需要调度的 useEffect 的回调
   if (didFlushPassiveEffects) {
     // Something in the passive effect phase may have canceled the current task.
     // Check if the task node for this root was changed.
@@ -769,6 +844,8 @@ function performConcurrentWorkOnRoot(root) {
 
   // Determine the next expiration time to work on, using the fields stored
   // on the root.
+  // Scheduler 的 workLoop 可能会反复调用该方法
+  // 如果 lanes 为 NoLanes 则表示任务执行完成
   let lanes = getNextLanes(
     root,
     root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes,
@@ -778,12 +855,20 @@ function performConcurrentWorkOnRoot(root) {
     return null;
   }
 
+  // 进入 render 阶段
+  // 如果时间片用尽被打断，则返回 RootIncomplete 0
+  // 所有 fiber 都执行完成，则返回 RootCompleted 5
   let exitStatus = renderRootConcurrent(root, lanes);
-
+  // console.log('exitStatus', exitStatus);
+  // if (exitStatus === 5) {
+  //   debugger
+  // }
+  
   if (
     includesSomeLane(
       workInProgressRootIncludedLanes,
       workInProgressRootUpdatedLanes,
+      // render 阶段触发更新进入 scheduleUpdateOnFiber 方法，workInProgressRootUpdatedLanes 才会被赋值
     )
   ) {
     // The render included lanes that were updated during the render phase.
@@ -827,9 +912,31 @@ function performConcurrentWorkOnRoot(root) {
     const finishedWork: Fiber = (root.current.alternate: any);
     root.finishedWork = finishedWork;
     root.finishedLanes = lanes;
+
+    // renderRootConcurrent 正常执行完成 exitStatus 为 5
+    // 本次更新所使用的 lanes 即已经完成的 lanes，赋值到 root.finishedLanes
+    // 进入 commit 阶段后，会将 finishedLanes 相关的属性进行重置
+    
     finishConcurrentRender(root, exitStatus, lanes);
   }
 
+  // if (shouldYieldCount === 3) {
+  //   debugger
+  // }
+
+  // 首屏加载时
+  // renderRootConcurrent 中 workLoopConcurrent 因时间片用尽而被打断，exitStatus 为 0
+  // 再次进入 ensureRootIsScheduled，root.callbackNode 不变
+  // return performConcurrentWorkOnRoot.bind(...)
+  // Scheduler 的 workLoop 中回调执行完毕得到该函数，进到下一轮循环，时间片用尽，跳出循环
+  // performWorkUntilDeadline 中 hasMoreWork 为 true，再次 postMessage
+  // ...
+  //    直到 render 阶段完成，finishConcurrentRender 中将 root.callbackNode 还原为 null
+  //    这里才会 return null
+  //      或
+  //    一个低优先级任务还未执行，被一个高优先级任务打断
+  //    进入 ensureRootIsScheduled 得到新的 root.callbackNode
+  //    也不满足这里的判断,从而 return null
   ensureRootIsScheduled(root, now());
   if (root.callbackNode === originalCallbackNode) {
     // The task node scheduled for this root is the same one that's
@@ -1640,6 +1747,33 @@ function workLoopConcurrent() {
   }
 }
 
+let shouldYieldCount = 0
+
+// /** @noinline */
+// function workLoopConcurrent() {
+//   // Perform work until Scheduler asks us to yield
+//   let shouldYieldFlag = shouldYield()
+//   console.log('workLoopConcurrent，首轮while循环 shouldYieldFlag', shouldYieldFlag);
+  
+//   // while (workInProgress !== null && !shouldYield()) {
+//   while (workInProgress !== null && !shouldYieldFlag) {
+//     performUnitOfWork(workInProgress);
+    
+//     shouldYieldFlag = shouldYield()
+
+//     // 第三次 yield 时，进入debugger
+//     if (shouldYieldFlag) {
+//       shouldYieldCount++
+      
+//       console.log('shouldYield', workInProgress);
+//       if (shouldYieldCount === 3) {
+//         // console.log('shouldYield', workInProgress);
+//         // debugger
+//       }
+//     }
+//   }
+// }
+
 function performUnitOfWork(unitOfWork: Fiber): void {
   // The current, flushed, state of this fiber is the alternate. Ideally
   // nothing should rely on this, but relying on it here means that we don't
@@ -1903,8 +2037,8 @@ function commitRootImpl(root, renderPriorityLevel) {
     'Should not already be working.',
   );
 
-  const finishedWork = root.finishedWork;
-  const lanes = root.finishedLanes;
+  const finishedWork = root.finishedWork; // 本次更新 tag 为 3 的 rootFiber.alternate
+  const lanes = root.finishedLanes; // performConcurrentWorkOnRoot 中进入 commit 阶段前赋值
 
   if (__DEV__) {
     if (enableDebugTracing) {
@@ -1930,7 +2064,7 @@ function commitRootImpl(root, renderPriorityLevel) {
     return null;
   }
   root.finishedWork = null;
-  root.finishedLanes = NoLanes;
+  root.finishedLanes = NoLanes; // 重置 fiberRoot 的 finishedLanes
 
   invariant(
     finishedWork !== root.current,
@@ -1944,8 +2078,13 @@ function commitRootImpl(root, renderPriorityLevel) {
 
   // Update the first and last pending times on this root. The new first
   // pending time is whatever is left on the root fiber.
+  // fiber 的 lanes 表示【自身】尚未执行的更新所需要使用的 lanes
+  // fiber 的 childLanes 表示【子树】所有未执行的更新所需要使用的 lanes
+  // 正常运行的 fiber，在进入 beginWork 后会将 lanes 还原为 NoLanes
+  // 如果 lanes 有值，表示有未执行的更新或新的更新
+  // 合并后得到 remainingLanes
   let remainingLanes = mergeLanes(finishedWork.lanes, finishedWork.childLanes);
-  markRootFinished(root, remainingLanes);
+  markRootFinished(root, remainingLanes); // 重置已使用的 lanes 相关属性
 
   // Clear already finished discrete updates in case that a later call of
   // `flushDiscreteUpdates` starts a useless render pass which may cancels
